@@ -112,6 +112,10 @@
         printf("%c ", value);
     }
 
+    void print_size_t(size_t value) {
+    printf("%zu ", value);
+    }
+
 
 
 #endif // ARRAY_H
