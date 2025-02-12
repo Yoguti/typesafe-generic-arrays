@@ -1,6 +1,7 @@
 #ifndef GEN_ARR
 #define GEN_ARR
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -23,8 +24,8 @@
                 size_t new_capacity = arr->capacity ? arr->capacity * 2 : 1; \
                 T *new_data = (T *)realloc(arr->data, sizeof(T) * new_capacity); \
                 if (new_data) { \
-                    arr->data = new_data; \
-                    arr->capacity = new_capacity; \
+                        arr->data = new_data; \
+                        arr->capacity = new_capacity; \
                 } \
             } \
         } \
@@ -44,10 +45,10 @@
                     size_t new_capacity = arr->capacity / 2; \
                     T *new_data = (T *)realloc(arr->data, sizeof(T) * new_capacity); \
                     if (new_data) { \
-                        arr->data = new_data; \
-                        arr->capacity = new_capacity; \
+                            arr->data = new_data; \
+                            arr->capacity = new_capacity; \
+                        } \
                     } \
-                } \
                 return; /* Stop after removing first match */ \
             } \
         } \
@@ -61,7 +62,7 @@
     } \
     \
     static inline T array_return_##T(Array_##T *arr, int index) { \
-        if (index < arr->length) { \
+        if (index < arr->length && index >= 0) { \
             return  arr->data[index]; \
         } \
     } \
@@ -73,7 +74,7 @@
     } \
     \
     static inline void array_insertion_sort_##T(Array_##T *arr) { \
-        for (size_t i = 1; i < arr->length; i++) { \
+        for (int i = 1; i < (int) arr->length; i++) { \
             T current = arr->data[i]; \
             int j = i - 1; \
             while (j >= 0 && arr->data[j] > current) { \
@@ -93,26 +94,27 @@
     } \
     \
     static inline int partition_##T(Array_##T *arr, int low, int high) { \
-    T pivot = arr->data[high]; // Choose the last element as pivot
-    int i = low - 1; // Pointer for the smaller element
-
-    for (int j = low; j < high; j++) { \
-        if (arr->data[j] <= pivot) { \
-            i++; \
-            array_swap_##T(arr, i, j); \
+        if (low < 0 || high >= (int)arr->length || low > high) return -1; \
+        T pivot = arr->data[high]; \
+        int i = low - 1; \
+        for (int j = low; j < high; j++) { \
+            if (arr->data[j] <= pivot) { \
+                i++; \
+                array_swap_##T(arr, i, j); \
+            } \
         } \
-    } \
-    array_swap_##T(arr, i + 1, high); \
-    return i + 1; \
+        array_swap_##T(arr, i + 1, high); \
+        return i + 1; \
     } \
     \
     static inline void quicksort_##T(Array_##T *arr, int low, int high) { \
-        if (low < high) { \
-            int pi = partition_##T(arr, low, high); \
-            quicksort_##T(arr, low, pi - 1); \
-            quicksort_##T(arr, pi + 1, high); \
-        } \
+        if (low < 0 || high >= (int)arr->length || low >= high) return; \
+        int pi = partition_##T(arr, low, high); \
+        if (pi == -1) return; \
+        quicksort_##T(arr, low, pi - 1); \
+        quicksort_##T(arr, pi + 1, high); \
     }
+    
 
     void print_int(int value) {
         printf("%d ", value);
