@@ -17,6 +17,7 @@ int main(void) {
         }
         digit_seen[digit] = true;
         number /= 10;
+       
     }
 
     return 0;

@@ -62,7 +62,7 @@
     \
     static inline T array_return_##T(Array_##T *arr, int index) { \
         if (index < arr->length) { \
-            return  arr->data[index]; \     
+            return  arr->data[index]; \
         } \
     } \
     \
@@ -72,11 +72,35 @@
         } \
     } \
     \
-    static inline void array_sort_##T(const Array_##T *arr, void (*func)(T)) { \
-        for (size_t i = 0; i < arr->length; i++) { \
-            func(arr->data[i]); \
+    static inline void array_insertion_sort_##T(Array_##T *arr) { \
+        for (size_t i = 1; i < arr->length; i++) { \
+            T current = arr->data[i]; \
+            int j = i - 1; \
+            while (j >= 0 && arr->data[j] > current) { \
+                arr->data[j+1] = arr->data[j]; \
+                j--; \
+            } \
+            arr->data[j+1] = current; \
         } \
-    }
+    } \
+    \
+    static inline void array_swap_##T(Array_##T *arr, int first, int second) { \
+        if (first < (int) arr->length && second < (int) arr->length) { \
+            T aux = arr->data[second]; \
+            arr->data[second] = arr->data[first]; \
+            arr->data[first] = aux; \
+        } \
+    } \
+    \
+
+    // Methods to implement: 
+    /*
+        - insertion sort
+        - quicksort
+        - reverse
+
+    */
+
 
     void print_int(int value) {
         printf("%d ", value);
