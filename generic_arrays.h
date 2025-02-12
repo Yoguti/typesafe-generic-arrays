@@ -1,5 +1,5 @@
-#ifndef ARRAY_H
-#define ARRAY_H
+#ifndef GEN_ARR
+#define GEN_ARR
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -92,15 +92,27 @@
         } \
     } \
     \
+    static inline int partition_##T(Array_##T *arr, int low, int high) { \
+    T pivot = arr->data[high]; // Choose the last element as pivot
+    int i = low - 1; // Pointer for the smaller element
 
-    // Methods to implement: 
-    /*
-        - insertion sort
-        - quicksort
-        - reverse
-
-    */
-
+    for (int j = low; j < high; j++) { \
+        if (arr->data[j] <= pivot) { \
+            i++; \
+            array_swap_##T(arr, i, j); \
+        } \
+    } \
+    array_swap_##T(arr, i + 1, high); \
+    return i + 1; \
+    } \
+    \
+    static inline void quicksort_##T(Array_##T *arr, int low, int high) { \
+        if (low < high) { \
+            int pi = partition_##T(arr, low, high); \
+            quicksort_##T(arr, low, pi - 1); \
+            quicksort_##T(arr, pi + 1, high); \
+        } \
+    }
 
     void print_int(int value) {
         printf("%d ", value);
@@ -148,4 +160,4 @@
 
 
 
-#endif // ARRAY_H
+#endif // GEN_ARR_H
