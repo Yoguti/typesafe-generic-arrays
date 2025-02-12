@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void remove_at(int *, int *, int);
-
+void invert(int *, int);
 int main(void) {
 
     int n = 10;
@@ -18,7 +18,7 @@ int main(void) {
     }
     printf("\n");
 
-    remove_at(buff, &n, 3);
+    invert(buff, n);
 
     for (int j = 0; j < n; j++) {
         printf("%d ", buff[j]);
@@ -39,5 +39,16 @@ void remove_at(int *arr, int *size, int at) {
     }
     (*size)--;  
     arr = realloc(arr, (*size) * sizeof(int));
+
+}
+
+void invert(int *arr, int size) {
+	int tail = size - 1;
+	for (int i = 0; i < size / 2; i++) {
+		int aux = arr[i];
+		arr[i] = arr[tail];
+		arr[tail] = aux;
+		tail--;
+	}
 
 }

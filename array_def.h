@@ -71,6 +71,12 @@
             func(arr->data[i]); \
         } \
     } \
+    \
+    static inline void array_sort_##T(const Array_##T *arr, void (*func)(T)) { \
+        for (size_t i = 0; i < arr->length; i++) { \
+            func(arr->data[i]); \
+        } \
+    }
 
     void print_int(int value) {
         printf("%d ", value);
@@ -111,9 +117,9 @@
     void print_unsigned_char(unsigned char value) {
         printf("%c ", value);
     }
-
+    
     void print_size_t(size_t value) {
-    printf("%zu ", value);
+        printf("%zu ", value);
     }
 
 
