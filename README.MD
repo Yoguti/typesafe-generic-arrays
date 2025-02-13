@@ -72,3 +72,6 @@ The array automatically grows when elements are added and the capacity is reache
 - Memory is automatically managed
 - Error checking is included for all operations
 - The library is header-only for easy integration
+
+## License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). 
