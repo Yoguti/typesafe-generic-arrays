@@ -12,6 +12,22 @@
         size_t capacity; \
     } Array_##T; \
     \
+    static Array_##T array_copy_##T(Array_##T *arr) { \
+        Array_##T array_copy; \
+        array_copy.data = (T *)malloc(sizeof(T) * arr->capacity); \
+        if (!array_copy.data) { \
+            array_copy.length = 0; \
+            array_copy.capacity = 0; \
+            return array_copy; \
+        } \
+        array_copy.length = arr->length; \
+        array_copy.capacity = arr->capacity; \
+        for (int i = 0; i < (int) arr->length; i++) { \
+            array_copy.data[i] = arr->data[i]; \
+        } \
+        return array_copy; \
+    } \    
+    \
     static void array_init_##T(Array_##T *arr, size_t capacity) { \
         arr->data = (T *)malloc(sizeof(T) * capacity); \
         arr->length = 0; \
@@ -141,7 +157,6 @@
     static void array_clear_##T(Array_##T *arr) { \
         arr->length = 0; \
     } \
-    \
 
     /*
         array_copy_##T
