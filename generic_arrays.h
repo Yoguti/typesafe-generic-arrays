@@ -157,11 +157,18 @@
     static void array_clear_##T(Array_##T *arr) { \
         arr->length = 0; \
     } \
-
-    /*
-        array_copy_##T
-        array_mismatch_##T
-
-    */
+    \
+    static int array_mismatch_##T(Array_##T *first_arr, Array_##T *second_arr) { \
+        if (first_arr->length != second_arr->length) { \
+            return -2; \
+        } \
+        for (int i = 0; i < first_arr->length; i++) { \
+            if (first_arr->data[i] != second_arr->data[i]) { \
+                return i; \
+            } \
+        } \
+        return -1; \
+    }
+    
 
 #endif // GEN_ARR_H
