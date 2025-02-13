@@ -1,4 +1,4 @@
-# Generic Array Implementation in C
+# Typesafe Generic Arrays in C
 
 A header-only library providing type-safe dynamic arrays in C through macro-based generic programming. This implementation offers common array operations with automatic memory management and includes sorting algorithms.
 
