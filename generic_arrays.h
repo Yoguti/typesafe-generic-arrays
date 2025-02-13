@@ -12,7 +12,7 @@
         size_t capacity; \
     } Array_##T; \
     \
-    static inline void array_init_##T(Array_##T *arr, size_t capacity) { \
+    static void array_init_##T(Array_##T *arr, size_t capacity) { \
         arr->data = (T *)malloc(sizeof(T) * capacity); \
         arr->length = 0; \
         arr->capacity = capacity; \
@@ -57,13 +57,13 @@
         arr->capacity = 0; \
     } \
     \
-    static inline T array_return_##T(Array_##T *arr, int index) { \
+    static T array_return_##T(Array_##T *arr, int index) { \
         if (index < arr->length && index >= 0) { \
             return  arr->data[index]; \
         } \
     } \
     \
-    static inline void array_print_##T(const Array_##T *arr, const char* format, size_t upper_bound) { \
+    static void array_print_##T(const Array_##T *arr, const char* format, size_t upper_bound) { \
         if (upper_bound > arr->length) upper_bound = arr->length; \
         for (size_t i = 0; i < upper_bound; i++) { \
             printf(format, arr->data[i]); \
@@ -115,13 +115,38 @@
         quicksort_##T(arr, pi + 1, high); \
     } \
     \
-    static void array_reverse_##T(Array_##T *arr, int low, int high) { \
-        if (low < 0 || high >= (int)arr->length || low >= high) return; \
-        int pi = partition_##T(arr, low, high); \
-        if (pi == -1) return; \
-        quicksort_##T(arr, low, pi - 1); \
-        quicksort_##T(arr, pi + 1, high); \
-    }
+    static void array_reverse_##T(Array_##T *arr) { \
+        for (int i = 0; i < (int)arr->length / 2; i++) { \
+            T temp = arr->data[i]; \
+            arr->data[i] = arr->data[arr->length - 1 - i]; \
+            arr->data[arr->length - 1 - i] = temp; \
+        } \
+    } \
+    \
+    static int array_indexof_##T(Array_##T *arr, T goal) { \
+        int i = 0; \
+        while (i < arr->length) { \
+             if (arr->data[i] == goal) { \
+                return i; \
+             } \
+             i++; \
+        } \
+        return -1; \
+    } \
+    \
+    static bool array_contains_##T(Array_##T *arr, T goal) { \
+        return array_indexof_##T != -1; \
+    } \
+    \
+    static void array_clear_##T(Array_##T *arr) { \
+        arr->length = 0; \
+    } \
+    \
 
+    /*
+        array_copy_##T
+        array_mismatch_##T
+
+    */
 
 #endif // GEN_ARR_H
