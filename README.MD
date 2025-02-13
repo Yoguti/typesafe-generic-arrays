@@ -48,19 +48,20 @@ For any type `T`, the following functions are generated:
 
 | Function | Description |
 |----------|-------------|
-| `array_init_T(Array_T *arr, size_t capacity)` | Initialize array with given capacity |
-| `array_add_T(Array_T *arr, T value)` | Add element to array |
-| `array_remove_T(Array_T *arr, T value)` | Remove first occurrence of value |
-| `array_free_T(Array_T *arr)` | Free array memory |
-| `array_return_T(Array_T *arr, int index)` | Get element at index |
-| `array_print_T(Array_T *arr, const char* format, size_t upper_bound)` | Print array elements |
-| `array_insertion_sort_T(Array_T *arr)` | Sort using insertion sort |
-| `array_quicksort_T(Array_T *arr, int low, int high)` | Sort using quicksort |
-| `array_reverse_T(Array_T *arr)` | Reverse array elements |
-| `array_indexof_T(Array_T *arr, T goal)` | Find index of element |
-| `array_contains_T(Array_T *arr, T goal)` | Check if element exists |
-| `array_clear_T(Array_T *arr)` | Remove all elements |
-| `array_copy_T(Array_T *arr)` | Create deep copy of array |
+| `array_init_T(Array_T *arr, size_t capacity)` | Initialize array with given capacity. Returns nothing. |
+| `array_add_T(Array_T *arr, T value)` | Add an element to the array. Returns nothing. |
+| `array_remove_T(Array_T *arr, T value)` | Remove the first occurrence of `value` from the array. Returns nothing. |
+| `array_free_T(Array_T *arr)` | Free memory allocated for the array. Returns nothing. |
+| `array_return_T(Array_T *arr, int index)` | Get the element at the specified index. Returns the element at the given index, or undefined behavior if index is out of range. |
+| `array_print_T(Array_T *arr, const char* format, size_t upper_bound)` | Print array elements up to `upper_bound` using the provided format. Returns nothing. |
+| `array_insertion_sort_T(Array_T *arr)` | Sort the array using the insertion sort algorithm. Returns nothing. |
+| `array_quicksort_T(Array_T *arr, int low, int high)` | Sort the array using the quicksort algorithm within the given range (`low` to `high`). Returns nothing. |
+| `array_reverse_T(Array_T *arr)` | Reverse the array elements. Returns nothing. |
+| `array_indexof_T(Array_T *arr, T goal)` | Find the index of the element `goal`. Returns the index of the first occurrence, or -1 if the element is not found. |
+| `array_contains_T(Array_T *arr, T goal)` | Check if the element `goal` exists in the array. Returns `true` if found, otherwise `false`. |
+| `array_clear_T(Array_T *arr)` | Remove all elements from the array. Returns nothing. |
+| `array_copy_T(Array_T *arr)` | Create a deep copy of the array. Returns a new `Array_T` with a copied content. |
+| `array_mismatch_T(Array_T *arr, Array_T *second_arr)` | Find the first index where the two arrays mismatch. Returns -1 if arrays are identical, or the index of the mismatch. If arrays have different lengths, returns -2. |
 
 ## Memory Management
 
