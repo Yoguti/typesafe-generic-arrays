@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "array_def.h"
+#include "generic_arrays.h"
 
 // Define an array type for `int`
 DEFINE_ARRAY_TYPE(int)
