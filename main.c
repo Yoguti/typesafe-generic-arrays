@@ -4,8 +4,8 @@
 // Use DEFINE_ARRAY_TYPE macro to create typed array implementations
 // This creates all the necessary functions for the specified type
 // Example: DEFINE_ARRAY_TYPE(int) creates Array_int and all related functions
-DEFINE_ARRAY_TYPE(int)
-DEFINE_ARRAY_TYPE(double)
+DEFINE_ARRAY_TYPE(int, int)
+DEFINE_ARRAY_TYPE(double, double)
 
 int main() {
     Array_int numbers;
