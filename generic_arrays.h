@@ -5,15 +5,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define DEFINE_ARRAY_TYPE(T) \
+#define DEFINE_ARRAY_TYPE(alias, T) \
     typedef struct { \
         T *data; \
         size_t length; \
         size_t capacity; \
-    } Array_##T; \
+    } Array_##alias; \
     \
-    static Array_##T array_copy_##T(Array_##T *arr) { \
-        Array_##T array_copy; \
+    static Array_##alias array_copy_##alias(Array_##alias *arr) { \
+        Array_##alias array_copy; \
         array_copy.data = (T *)malloc(sizeof(T) * arr->capacity); \
         if (!array_copy.data) { \
             array_copy.length = 0; \
@@ -26,15 +26,15 @@
             array_copy.data[i] = arr->data[i]; \
         } \
         return array_copy; \
-    } \    
+    } \
     \
-    static void array_init_##T(Array_##T *arr, size_t capacity) { \
+    static void array_init_##alias(Array_##alias *arr, size_t capacity) { \
         arr->data = (T *)malloc(sizeof(T) * capacity); \
         arr->length = 0; \
         arr->capacity = capacity; \
     } \
     \
-    static void array_add_##T(Array_##T *arr, T value) { \
+    static void array_add_##alias(Array_##alias *arr, T value) { \
         if (arr->length >= arr->capacity) { \
             size_t new_capacity = arr->capacity ? arr->capacity * 2 : 1; \
             T *new_data = (T *)realloc(arr->data, sizeof(T) * new_capacity); \
@@ -45,7 +45,7 @@
         arr->data[arr->length++] = value; \
     } \
     \
-    static void array_remove_##T(Array_##T *arr, T value) { \
+    static void array_remove_##alias(Array_##alias *arr, T value) { \
         for (size_t i = 0; i < arr->length; i++) { \
             if (arr->data[i] == value) { \
                 for (size_t j = i; j < arr->length - 1; j++) { \
@@ -66,20 +66,20 @@
             } \
         } \
     } \
-    static void array_free_##T(Array_##T *arr) { \
+    static void array_free_##alias(Array_##alias *arr) { \
         free(arr->data); \
         arr->data = NULL; \
         arr->length = 0; \
         arr->capacity = 0; \
     } \
     \
-    static T array_return_##T(Array_##T *arr, int index) { \
+    static T array_return_##alias(Array_##alias *arr, int index) { \
         if (index < arr->length && index >= 0) { \
             return  arr->data[index]; \
         } \
     } \
     \
-    static void array_print_##T(const Array_##T *arr, const char* format, size_t upper_bound) { \
+    static void array_print_##alias(const Array_##alias *arr, const char* format, size_t upper_bound) { \
         if (upper_bound > arr->length) upper_bound = arr->length; \
         for (size_t i = 0; i < upper_bound; i++) { \
             printf(format, arr->data[i]); \
@@ -87,7 +87,7 @@
         printf("\n"); \
     } \
     \
-    static void array_insertion_sort_##T(Array_##T *arr) { \
+    static void array_insertion_sort_##alias(Array_##alias *arr) { \
         for (int i = 1; i < (int) arr->length; i++) { \
             T current = arr->data[i]; \
             int j = i - 1; \
@@ -99,7 +99,7 @@
         } \
     } \
     \
-    static void array_swap_##T(Array_##T *arr, int first, int second) { \
+    static void array_swap_##alias(Array_##alias *arr, int first, int second) { \
         if (first < (int) arr->length && second < (int) arr->length) { \
             if (first >= 0  && second >= 0) { \
                 T aux = arr->data[second]; \
@@ -109,29 +109,29 @@
         } \
     } \
     \
-    static int partition_##T(Array_##T *arr, int low, int high) { \
+    static int partition_##alias(Array_##alias *arr, int low, int high) { \
         if (low < 0 || high >= (int)arr->length || low > high) return -1; \
         T pivot = arr->data[high]; \
         int i = low - 1; \
         for (int j = low; j < high; j++) { \
             if (arr->data[j] <= pivot) { \
                 i++; \
-                array_swap_##T(arr, i, j); \
+                array_swap_##alias(arr, i, j); \
             } \
         } \
-        array_swap_##T(arr, i + 1, high); \
+        array_swap_##alias(arr, i + 1, high); \
         return i + 1; \
     } \
     \
-    static void quicksort_##T(Array_##T *arr, int low, int high) { \
+    static void quicksort_##alias(Array_##alias *arr, int low, int high) { \
         if (low < 0 || high >= (int)arr->length || low >= high) return; \
-        int pi = partition_##T(arr, low, high); \
+        int pi = partition_##alias(arr, low, high); \
         if (pi == -1) return; \
-        quicksort_##T(arr, low, pi - 1); \
-        quicksort_##T(arr, pi + 1, high); \
+        quicksort_##alias(arr, low, pi - 1); \
+        quicksort_##alias(arr, pi + 1, high); \
     } \
     \
-    static void array_reverse_##T(Array_##T *arr) { \
+    static void array_reverse_##alias(Array_##alias *arr) { \
         for (int i = 0; i < (int)arr->length / 2; i++) { \
             T temp = arr->data[i]; \
             arr->data[i] = arr->data[arr->length - 1 - i]; \
@@ -139,7 +139,7 @@
         } \
     } \
     \
-    static int array_indexof_##T(Array_##T *arr, T goal) { \
+    static int array_indexof_##alias(Array_##alias *arr, T goal) { \
         int i = 0; \
         while (i < arr->length) { \
              if (arr->data[i] == goal) { \
@@ -150,15 +150,15 @@
         return -1; \
     } \
     \
-    static bool array_contains_##T(Array_##T *arr, T goal) { \
-        return array_indexof_##T != -1; \
+    static bool array_contains_##alias(Array_##alias *arr, T goal) { \
+        return array_indexof_##alias(arr, goal) != -1; \
     } \
     \
-    static void array_clear_##T(Array_##T *arr) { \
+    static void array_clear_##alias(Array_##alias *arr) { \
         arr->length = 0; \
     } \
     \
-    static int array_mismatch_##T(Array_##T *first_arr, Array_##T *second_arr) { \
+    static int array_mismatch_##alias(Array_##alias *first_arr, Array_##alias *second_arr) { \
         if (first_arr->length != second_arr->length) { \
             return -2; \
         } \
